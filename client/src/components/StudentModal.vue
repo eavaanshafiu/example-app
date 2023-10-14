@@ -10,7 +10,7 @@
             <v-card-actions>
                 <v-btn @click="close" color="red">Close</v-btn>
                 <v-btn @click="save" v-if="!student.id" color="green">Save</v-btn>
-                <v-btn @click="update" v-if="student.id" color="blue">Update</v-btn>
+                <v-btn @click="update" v-if="student.id" color="purple">Update</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
