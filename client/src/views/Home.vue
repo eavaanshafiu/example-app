@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto" width="400" prepend-icon="mdi-home">
+    <v-card class="mx-auto" width="700" >
       <template v-slot:title>
         Students
       </template>
@@ -23,6 +23,10 @@
               <tr v-for="item in items" :key="item.name">
                 <td>{{ item.first_name }}</td>
                 <td>{{ item.last_name }}</td>
+                <td>
+                  <v-icon color="blue" @click="$refs.studentModal.edit(item.id)">mdi-pencil</v-icon>
+                  <v-icon color="red" @click="$refs.studentModal.deleteStudent(item.id)">mdi-delete</v-icon>
+                </td>
               </tr>
             </tbody>
           </v-table>

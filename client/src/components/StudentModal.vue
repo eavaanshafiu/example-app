@@ -9,7 +9,8 @@
 
             <v-card-actions>
                 <v-btn @click="close" color="red">Close</v-btn>
-                <v-btn @click="save" color="green">Save</v-btn>
+                <v-btn @click="save" v-if="!student.id" color="green">Save</v-btn>
+                <v-btn @click="update" v-if="student.id" color="blue">Update</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -36,6 +37,35 @@ export default {
                 this.close()
             });
 
+        },
+
+        update(){
+            axios({
+                method: 'put',
+                url: `http://127.0.0.1:8000/api/students/${this.student.id}`,
+                data: this.student
+            }).then((resp) => {
+                this.close()
+            });
+        },
+
+        deleteStudent(id){
+            axios({
+                method: 'delete',
+                url: `http://127.0.0.1:8000/api/students/${id}`,
+            }).then((resp) => {
+                this.close()
+            });
+        },
+
+        edit(id){
+            axios({
+                method: 'get',
+                url: `http://127.0.0.1:8000/api/students/${id}`,
+            }).then((resp) => {
+                this.student = resp.data
+                this.open()
+            });
         },
         open() {
             this.show = true;
