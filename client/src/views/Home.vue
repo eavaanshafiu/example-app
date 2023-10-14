@@ -1,44 +1,52 @@
 <template>
-  <!-- <HelloWorld /> -->
-  <p>{{ name }}</p>
-  <p>{{ age }}</p>
-  <!-- for loop to display array-->
-  <p v-for="subject in subjects"> {{ subject }}</p>
-  <p>{{ course.name }}</p>
-  <p>{{ course.duration }}</p>
-  <p>{{ course.yearStart }}</p>
-  <v-btn @click="sayHello">
-    Greet
-  </v-btn>
-  <v-btn @click="agePlus">
-    {{ age }}
-  </v-btn>
+    <v-card class="mx-auto" width="400" prepend-icon="mdi-home">
+      <template v-slot:title>
+        Students
+      </template>
+
+      <v-card-text>
+          <v-table>
+            <thead>
+              <tr>
+                <th class="text-left">
+                  First Name
+                </th>
+                <th class="text-left">
+                  Last Name
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in items" :key="item.name">
+                <td>{{ item.first_name }}</td>
+                <td>{{ item.last_name }}</td>
+              </tr>
+            </tbody>
+          </v-table>
+       
+      </v-card-text>
+    </v-card>
 </template>
 
 <script >
-// import HelloWorld from '@/components/HelloWorld.vue'
+import axios from 'axios';
 
 export default {
   data: () => ({   //all varibales will be stored here
-    name: "mohamed",
-    age: 22,
-    subjects: ['isam', 'maths', 'dhivehi'],
-    course: {
-      name: 'computer science',
-      duration: "3 years",
-      yearStart: "2022"
-    },
+    items: []
   }),
-  // mounted() {
-  //   alert('Hello')
-  // },
   methods: {
-    sayHello() {
-      alert('hello from methods')
-    },
-    agePlus() {
-      this.age = this.age + 1;
+    getItems() {
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/api/students',
+      }).then((resp) => {
+        this.items = resp.data;
+      });
     }
+  },
+  mounted() {
+    this.getItems();
   }
 }
 </script>
